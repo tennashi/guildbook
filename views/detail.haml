@@ -1,28 +1,34 @@
-%table.table.table-striped
+%table.table.table-striped.h-card.vcard
   %tr
     %th ログイン名
     %td #{user['uid'].first} (##{user['uidNumber'].first})
   %tr
     %th 氏名
-    %td #{user['sn;lang-ja'].first} #{user['givenName;lang-ja'].first} (#{user['sn'].first} #{user['givenName'].first})
+    %td
+      %span.fn.n.p-name
+        %span.family-name.p-family-name #{user['sn;lang-ja'].first}
+        %span.given-name.p-given-name #{user['givenName;lang-ja'].first}
+      (#{user['sn'].first} #{user['givenName'].first})
   - if user['x-kmc-Alias'].first
     %tr
       %th 別名
-      %td
+      %td.nickname.p-nickname
         = user['x-kmc-Alias'].first
   %tr
     %th メールアドレス
     %td
       - if user['mail'].first
-        %a{href: "mailto:#{user['mail'].first}"}= user['mail'].first
+        %a.email.u-email{href: "mailto:#{user['mail'].first}"}= user['mail'].first
   %tr
     %th 電話番号
     %td
       - if user['telephoneNumber'].first
-        %a{href: "tel:#{user['telephoneNumber'].first}"}= user['telephoneNumber'].first
+        %a.tel.p-tel{href: "tel:#{user['telephoneNumber'].first}"}= user['telephoneNumber'].first
   %tr
     %th 住所
-    %td #{user['postalCode'].first} #{user['postalAddress'].first}
+    %td.adr.h-adr
+      %span.postal-code.u-postal-code #{user['postalCode'].first}
+      %span.extended-address.u-extended-address #{user['postalAddress'].first}
   - if user['x-kmc-UniversityDepartment'].first
     %tr
       %th 所属
@@ -30,7 +36,7 @@
   - if user['description'].first
     %tr
       %th 備考
-      %td= user['description'].first
+      %td.note.p-note= user['description'].first
   %tr
     %th 最終更新
     %td
